@@ -6,12 +6,12 @@ cabal-version: 2.2
 
 name:           wtk-types
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/wtk-types#readme>
-homepage:       https://github.com/githubuser/wtk-types#readme
-bug-reports:    https://github.com/githubuser/wtk-types/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2024 Author name here
+description:    Please see the README on GitHub at <https://github.com/gtollini/wtk-types#readme>
+homepage:       https://github.com/gtollini/wtk-types#readme
+bug-reports:    https://github.com/gtollini/wtk-types/issues
+author:         Gabriel Tollini
+maintainer:     gabrieltollini@hotmail.com
+copyright:      2024 Gabriel Tollini
 license:        BSD-3-Clause
 license-file:   LICENSE
 build-type:     Simple
@@ -21,13 +21,13 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/wtk-types
+  location: https://github.com/gtollini/wtk-types
 
 library
   exposed-modules:
-      Data.Wtk.Classes
       Data.Wtk.Functions
       Data.Wtk.Types
+      Data.Wtk.Validators
   other-modules:
       Paths_wtk_types
   autogen-modules:
