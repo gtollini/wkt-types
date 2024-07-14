@@ -1,2 +1,10 @@
+module Main where
+
+import Test.Hspec
+import Test.Data.Wkt.ToWKT
+
 main :: IO ()
-main = putStrLn "Test suite not yet implemented"
+main = hspec $ do
+    points
+
+

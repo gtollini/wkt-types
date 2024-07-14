@@ -37,6 +37,7 @@ library
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
   build-depends:
       base >=4.7 && <5
+    , hspec
   default-language: Haskell2010
 
 executable wkt-types-exe
@@ -50,6 +51,7 @@ executable wkt-types-exe
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec
     , wkt-types
   default-language: Haskell2010
 
@@ -57,6 +59,7 @@ test-suite wkt-types-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.Data.Wkt.ToWKT
       Paths_wkt_types
   autogen-modules:
       Paths_wkt_types
@@ -65,5 +68,6 @@ test-suite wkt-types-test
   ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
   build-depends:
       base >=4.7 && <5
+    , hspec
     , wkt-types
   default-language: Haskell2010
