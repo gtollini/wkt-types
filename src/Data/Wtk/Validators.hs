@@ -1,5 +1,4 @@
-{-# LANGUAGE NamedFieldPuns #-}
-module Data.Wtk.Validators (Valid(..)) where
+module Data.Wtk.Validators (module Data.Wtk.Validators) where
 import Data.Wtk.Types
 import Data.List (sort, group)
 import Data.Maybe (isJust)
@@ -19,10 +18,10 @@ instance Valid LineString where
             tpointDimensions = pointDimension <$> tpoints
 
 instance Valid Polygon where
-    isValid (Polygon lines') = firstPoint == lastPoint
+    isValid (Polygon lines') = validLines && validPolygon
         where
-            firstPoint = head lines'
-            lastPoint = head lines'
+            validLines = all isValid lines'
+            validPolygon = all (\(LineString line) -> head line == last line) lines'
 
 instance Valid Triangle where
     isValid (Triangle lines') = firstPoint == lastPoint && size == 4
@@ -48,17 +47,17 @@ instance Valid MultiPolygon where
     isValid (MultiPolygon polygons') = all isValid polygons'
 
 instance Valid TIN where
-    isValid (TIN {triangles}) = validTriangles && isContinuous
+    isValid (TIN triangles) = validTriangles && isContinuous
         where
             validTriangles = all isValid triangles
-            allPoints = concatMap vertices triangles
-            isContinuous =  notElem 1 $ length <$> group (sort allPoints) -- checks if every point is on at least two triangles.
+            allPoints = concatMap (\(Triangle points) -> points) triangles
+            isContinuous =  notElem 1 $ length <$> group (sort allPoints) -- checks if every point is on at least two sides.
 
 instance Valid GeometryCollection where
     isValid (GeometryCollection collection') = all isValid collection'
 
 instance Valid PolyhedralSurface where
-    isValid (PolyhedralSurface {surfaces}) = valid -- checks if every side has two triangles associated to it.
+    isValid (PolyhedralSurface surfaces) = valid -- checks if every side has two triangles associated to it.
         where
             sides = group $ sort $ concatMap allSides surfaces
             valid =  all ((==2) . length) sides
@@ -71,8 +70,7 @@ pointDimension (Point _ _ z' m')
 
 -- Must be valid Triangle
 allSides :: Triangle -> [(Point, Point)]
-allSides (Triangle {vertices}) = allPairs vertices
-
+allSides (Triangle vertices) = allPairs vertices
 
 allPairs :: [a] -> [(a,a)]
 allPairs [] = []

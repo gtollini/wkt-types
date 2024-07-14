@@ -26,6 +26,7 @@ source-repository head
 library
   exposed-modules:
       Data.Wtk.Functions
+      Data.Wtk.Showables
       Data.Wtk.Types
       Data.Wtk.Validators
   other-modules:

@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances #-}
-module Data.Wtk.Types where
+module Data.Wtk.Types (module Data.Wtk.Types) where
 
 -- Primitives
 data Point = Point{
@@ -10,40 +10,24 @@ data Point = Point{
 }
     deriving (Eq, Ord)
 
-newtype LineString = LineString{
-    line :: [Point]
-}
-    deriving Eq
+newtype LineString = LineString [Point]
 
-newtype Triangle = Triangle{
-    vertices :: [Point]
-}
-newtype Polygon = Polygon{
-    polygon :: [LineString]
-}
+newtype Triangle  = Triangle [Point]
+
+newtype Polygon = Polygon [LineString]
 
 data Primitives = PrimPoint Point | PrimLine LineString | PrimPolygon Polygon | PrimTriangle Triangle
 
 -- Multipart
-newtype MultiPoint = MultiPoint{
-    points :: [Point]
-}
+newtype MultiPoint = MultiPoint [Point]
 
-newtype MultiLineString = MultiLineString{
-    lines :: [LineString]
-}
+newtype MultiLineString = MultiLineString [LineString]
 
-newtype MultiPolygon = MultiPolygon{
-    polygons :: [Polygon]
-}
+newtype MultiPolygon = MultiPolygon [Polygon]
 
-newtype PolyhedralSurface = PolyhedralSurface{
-    surfaces :: [Triangle]
-}
-newtype TIN = TIN{
-    triangles :: [Triangle]
-}
 
-newtype GeometryCollection = GeometryCollection{
-    collection :: [Primitives]
-}
+newtype PolyhedralSurface = PolyhedralSurface [Triangle]
+
+newtype TIN = TIN [Triangle]
+
+newtype GeometryCollection =  GeometryCollection [Primitives]
