@@ -7,4 +7,4 @@ main :: IO ()
 main = hspec $ do
     points
     lineStrings
-
+    polygons
