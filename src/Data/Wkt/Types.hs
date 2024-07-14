@@ -2,32 +2,32 @@
 module Data.Wkt.Types (module Data.Wkt.Types) where
 
 -- Primitives
-data Point = Point{
-    x :: Double,
-    y :: Double,
-    z :: Maybe Double,
-    m :: Maybe Double
+data Point a = Point{
+    x :: a,
+    y :: a,
+    z :: Maybe a,
+    m :: Maybe a
 }
     deriving (Eq, Ord)
 
-newtype LineString = LineString [Point]
+newtype LineString a = LineString [Point a]
 
-newtype Triangle  = Triangle [Point]
+newtype Triangle a  = Triangle [Point a]
 
-newtype Polygon = Polygon [LineString]
+newtype Polygon a = Polygon [LineString a]
 
-data Primitives = PrimPoint Point | PrimLine LineString | PrimPolygon Polygon | PrimTriangle Triangle
+data Primitives a = PrimPoint (Point a)| PrimLine (LineString a)| PrimPolygon (Polygon a)| PrimTriangle (Triangle a)
 
 -- Multipart
-newtype MultiPoint = MultiPoint [Point]
+newtype MultiPoint a = MultiPoint [Point a]
 
-newtype MultiLineString = MultiLineString [LineString]
+newtype MultiLineString a = MultiLineString [LineString a]
 
-newtype MultiPolygon = MultiPolygon [Polygon]
+newtype MultiPolygon a = MultiPolygon [Polygon a]
 
 
-newtype PolyhedralSurface = PolyhedralSurface [Triangle]
+newtype PolyhedralSurface a = PolyhedralSurface [Triangle a]
 
-newtype TIN = TIN [Triangle]
+newtype TIN a = TIN [Triangle a]
 
-newtype GeometryCollection =  GeometryCollection [Primitives]
+newtype GeometryCollection a =  GeometryCollection [Primitives a]

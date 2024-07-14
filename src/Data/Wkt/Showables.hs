@@ -1,5 +1,6 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
+{-# LANGUAGE InstanceSigs #-}
 
 module Data.Wkt.Showables (module Data.Wkt.Showables) where
 
@@ -8,7 +9,7 @@ import Data.Maybe (isJust)
 import Data.List (intercalate)
 
 -- Primitives
-instance Show Point where
+instance Show a => Show (Point a) where
     show (Point {x,y,z,m}) = pointValue
         where
             -- TODO: check if it's okay to have . or if I must always e.
@@ -18,61 +19,64 @@ instance Show Point where
             m' = maybe "" ((" " <>). show) m
             pointValue = x' <> " " <> y' <> z' <> m'
 
-instance Show LineString where
+instance Show a => Show (LineString a) where
     show (LineString line) = intercalate ", " (show <$> line)
 
-instance Show Triangle where
+instance Show a => Show (Triangle a) where
     show (Triangle vertices) = intercalate ", " (show <$> vertices)
 
-instance Show Polygon where
+instance Show a => Show (Polygon a) where
     show (Polygon polygon) = intercalate ", " rings
         where
             rings = map (\(LineString ring) -> "(" <> intercalate ", " (show <$> ring) <> ")") polygon
 
-instance Show Primitives where
+instance Show a => Show (Primitives a) where
     show (PrimPoint a)    = show a
     show (PrimLine a)     = show a
     show (PrimPolygon a)  = show a
     show (PrimTriangle a) = show a
 
 -- Multipart
-instance Show MultiPoint where
+instance Show a => Show (MultiPoint a) where
     show (MultiPoint points) = intercalate ", " (show <$> points)
 
-instance Show MultiLineString where
+instance Show a => Show (MultiLineString a) where
     show (MultiLineString lineStrings) = intercalate ", " lines'
         where
             lines' = map (\(LineString line) -> "(" <> intercalate ", " (show <$> line) <> ")") lineStrings
-instance Show MultiPolygon where
+instance Show a => Show (MultiPolygon a) where
     show (MultiPolygon polygons) = intercalate ", " polygons'
         where
             polygons' = map (\(Polygon polygon) -> "(" <> intercalate ", " (show <$> polygon) <> ")") polygons
 
-instance Show PolyhedralSurface where
+instance Show a => Show (PolyhedralSurface a) where
     show (PolyhedralSurface surface) = intercalate ", " surface'
         where
             surface' = map (\(Triangle triangle) -> "(" <> intercalate ", " (show <$> triangle) <> ")") surface
 
-instance Show TIN where
+instance Show a => Show (TIN a) where
     show (TIN triangles) = intercalate ", " triangles'
         where
             triangles' = map (\(Triangle triangle) -> "(" <> intercalate ", " (show <$> triangle) <> ")") triangles
 
-instance Show GeometryCollection where
+instance Show a => Show (GeometryCollection a) where
     show (GeometryCollection collection) = intercalate ", " (show <$> collection)   
 
 class ToWKT a where
     toWKT :: a -> String
 
-instance ToWKT Point where
-    toWKT point = "Point " <> zString <> mString <> " (" <> show point <> ")"
+instance Show a => ToWKT (Point a) where
+    toWKT point = "Point" <> zmString <> "(" <> show point <> ")"
         where
             Point{z,m} = point
 
-            zString = if isJust z then "Z" else ""
-            mString = if isJust m then "M" else ""
+            zmString
+                |isJust z && isJust m = " ZM "
+                |isJust z = " Z "
+                |isJust m = " M "
+                |otherwise = " "
 
-instance ToWKT LineString where
+instance Show a => ToWKT (LineString a) where
     toWKT lineString
         | null line = "EMPTY"
         | otherwise = "LineString " <> zString <> mString <> " (" <> show lineString <> ")"
@@ -85,7 +89,7 @@ instance ToWKT LineString where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT Triangle where
+instance Show a => ToWKT (Triangle a) where
     toWKT triangle = "Triangle " <> zString <> mString <> " (" <> show triangle <> ")"
         where
             Triangle vertices = triangle
@@ -97,7 +101,7 @@ instance ToWKT Triangle where
             mString = if isJust m' then "M" else ""
 
 
-instance ToWKT Polygon where
+instance Show a => ToWKT (Polygon a) where
     toWKT polygon = "Polygon " <> zString <> mString <> " (" <> show polygon <> ")"
         where
             Polygon rings = polygon
@@ -109,14 +113,14 @@ instance ToWKT Polygon where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT Primitives where
+instance Show a => ToWKT (Primitives a) where
     toWKT (PrimPoint a)    = toWKT a
     toWKT (PrimLine a)     = toWKT a
     toWKT (PrimPolygon a)  = toWKT a
     toWKT (PrimTriangle a) = toWKT a
 
 -- Multipart
-instance ToWKT MultiPoint where
+instance Show a => ToWKT (MultiPoint a) where
     toWKT (MultiPoint points) = "MultiPoint " <> zString <> mString <> " (" <> show points <> ")"
         where
             first = head points
@@ -126,7 +130,7 @@ instance ToWKT MultiPoint where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT MultiLineString where
+instance Show a => ToWKT (MultiLineString a) where
     toWKT (MultiLineString lineStrings) = "MultiLineString " <> zString <> mString <> " (" <> show lineStrings <> ")"
         where
             (LineString firstLine) = head lineStrings
@@ -137,7 +141,7 @@ instance ToWKT MultiLineString where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT MultiPolygon where
+instance Show a => ToWKT (MultiPolygon a) where
     toWKT (MultiPolygon polygons) = "MultiPolygon " <> zString <> mString <> " (" <> show polygons <> ")"
         where
             (Polygon firstPolygon) = head polygons
@@ -149,7 +153,7 @@ instance ToWKT MultiPolygon where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT PolyhedralSurface where
+instance Show a => ToWKT (PolyhedralSurface a) where
     toWKT (PolyhedralSurface surface) = "PolyhedralSurface " <> zString <> mString <> " (" <> show surface <> ")"
         where
             (Triangle firstTriangle) = head surface
@@ -160,7 +164,7 @@ instance ToWKT PolyhedralSurface where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT TIN where
+instance Show a => ToWKT (TIN a) where
     toWKT (TIN triangles) = "TIN " <> zString <> mString <> " (" <> show triangles <> ")"
         where
             (Triangle firstTriangle) = head triangles
@@ -171,7 +175,7 @@ instance ToWKT TIN where
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
 
-instance ToWKT GeometryCollection where
+instance Show a => ToWKT (GeometryCollection a) where
     toWKT (GeometryCollection collection) = "GeometryCollection " <> zString <> mString <> " (" <> show collection <> ")"
         where
             first = case head collection of
