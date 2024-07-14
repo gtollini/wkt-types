@@ -84,3 +84,103 @@ instance ToWKT LineString where
 
             zString = if isJust z' then "Z" else ""
             mString = if isJust m' then "M" else ""
+
+instance ToWKT Triangle where
+    toWKT triangle = "Triangle " <> zString <> mString <> " (" <> show triangle <> ")"
+        where
+            Triangle vertices = triangle
+            first = head vertices
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+
+instance ToWKT Polygon where
+    toWKT polygon = "Polygon " <> zString <> mString <> " (" <> show polygon <> ")"
+        where
+            Polygon rings = polygon
+            (LineString firstLine) = head rings
+            first = head firstLine
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT Primitives where
+    toWKT (PrimPoint a)    = toWKT a
+    toWKT (PrimLine a)     = toWKT a
+    toWKT (PrimPolygon a)  = toWKT a
+    toWKT (PrimTriangle a) = toWKT a
+
+-- Multipart
+instance ToWKT MultiPoint where
+    toWKT (MultiPoint points) = "MultiPoint " <> zString <> mString <> " (" <> show points <> ")"
+        where
+            first = head points
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT MultiLineString where
+    toWKT (MultiLineString lineStrings) = "MultiLineString " <> zString <> mString <> " (" <> show lineStrings <> ")"
+        where
+            (LineString firstLine) = head lineStrings
+            first = head firstLine
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT MultiPolygon where
+    toWKT (MultiPolygon polygons) = "MultiPolygon " <> zString <> mString <> " (" <> show polygons <> ")"
+        where
+            (Polygon firstPolygon) = head polygons
+            (LineString firstLine) = head firstPolygon
+            first = head firstLine
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT PolyhedralSurface where
+    toWKT (PolyhedralSurface surface) = "PolyhedralSurface " <> zString <> mString <> " (" <> show surface <> ")"
+        where
+            (Triangle firstTriangle) = head surface
+            first = head firstTriangle
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT TIN where
+    toWKT (TIN triangles) = "TIN " <> zString <> mString <> " (" <> show triangles <> ")"
+        where
+            (Triangle firstTriangle) = head triangles
+            first = head firstTriangle
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
+
+instance ToWKT GeometryCollection where
+    toWKT (GeometryCollection collection) = "GeometryCollection " <> zString <> mString <> " (" <> show collection <> ")"
+        where
+            first = case head collection of
+                PrimPoint a                 -> a
+                PrimLine (LineString a)     -> head a
+                PrimTriangle (Triangle a)   -> head a
+                PrimPolygon (Polygon a)     -> (\(LineString a') -> head a') $ head a
+            z' = z first
+            m' = m first
+
+            zString = if isJust z' then "Z" else ""
+            mString = if isJust m' then "M" else ""
