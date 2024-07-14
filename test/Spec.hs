@@ -10,3 +10,4 @@ main = hspec $ do
     polygons
     multiPoints
     multiLineStrings
+    multiPolygons

@@ -59,6 +59,7 @@ test-suite wkt-types-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
+      Test.Data.Wkt.TestElements
       Test.Data.Wkt.ToWKT
       Paths_wkt_types
   autogen-modules:

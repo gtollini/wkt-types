@@ -47,7 +47,8 @@ instance Show a => Show (MultiLineString a) where
 instance Show a => Show (MultiPolygon a) where
     show (MultiPolygon polygons) = intercalate ", " polygons'
         where
-            polygons' = map (\(Polygon polygon) -> "(" <> intercalate ", " (show <$> polygon) <> ")") polygons
+            polygons' =showP <$> polygons
+            -- polygons' = map (\(Polygon polygon) -> "(" <> intercalate ", " (show <$> polygon) <> ")") polygons
 
 instance Show a => Show (PolyhedralSurface a) where
     show (PolyhedralSurface surface) = intercalate ", " surface'
@@ -159,8 +160,9 @@ instance Show a => ToWKT (MultiLineString a) where
 
 
 instance Show a => ToWKT (MultiPolygon a) where
-    toWKT (MultiPolygon polygons) = "MultiPolygon" <> zmString <> "(" <> show polygons <> ")"
+    toWKT multiPolygon = "MultiPolygon" <> zmString <> "(" <> show multiPolygon <> ")"
         where
+            (MultiPolygon polygons) = multiPolygon
             (Polygon firstPolygon) = head polygons
             (LineString firstLine) = head firstPolygon
             first = head firstLine
