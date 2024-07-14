@@ -8,3 +8,5 @@ main = hspec $ do
     points
     lineStrings
     polygons
+    multiPoints
+    multiLineStrings

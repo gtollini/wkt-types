@@ -38,12 +38,12 @@ instance Show a => Show (Primitives a) where
 
 -- Multipart
 instance Show a => Show (MultiPoint a) where
-    show (MultiPoint points) = intercalate ", " (show <$> points)
+    show (MultiPoint points) = intercalate ", " (showP <$> points)
 
 instance Show a => Show (MultiLineString a) where
     show (MultiLineString lineStrings) = intercalate ", " lines'
         where
-            lines' = map (\(LineString line) -> "(" <> intercalate ", " (show <$> line) <> ")") lineStrings
+            lines' = showP <$> lineStrings
 instance Show a => Show (MultiPolygon a) where
     show (MultiPolygon polygons) = intercalate ", " polygons'
         where
@@ -129,8 +129,9 @@ instance Show a => ToWKT (Primitives a) where
 
 -- Multipart
 instance Show a => ToWKT (MultiPoint a) where
-    toWKT (MultiPoint points) = "MultiPoint" <> zmString <> "(" <> show points <> ")"
+    toWKT multiPoint = "MultiPoint" <> zmString <> "(" <> show multiPoint <> ")"
         where
+            (MultiPoint points) = multiPoint
             first = head points
             z' = z first
             m' = m first
@@ -142,8 +143,9 @@ instance Show a => ToWKT (MultiPoint a) where
                 |otherwise = " "
 
 instance Show a => ToWKT (MultiLineString a) where
-    toWKT (MultiLineString lineStrings) = "MultiLineString" <> zmString <> "(" <> show lineStrings <> ")"
+    toWKT multiLineString = "MultiLineString" <> zmString <> "(" <> show multiLineString <> ")"
         where
+            (MultiLineString lineStrings) = multiLineString
             (LineString firstLine) = head lineStrings
             first = head firstLine
             z' = z first
@@ -215,3 +217,7 @@ instance Show a => ToWKT (GeometryCollection a) where
                 |isJust z' = " Z "
                 |isJust m' = " M "
                 |otherwise = " "
+
+-- Helpers
+showP :: Show a => a -> String
+showP = ("(" <>) . (<> ")") . show
