@@ -6,5 +6,5 @@ import Test.Data.Wkt.ToWKT
 main :: IO ()
 main = hspec $ do
     points
-
+    lineStrings
 

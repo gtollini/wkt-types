@@ -69,7 +69,6 @@ instance Show a => ToWKT (Point a) where
     toWKT point = "Point" <> zmString <> "(" <> show point <> ")"
         where
             Point{z,m} = point
-
             zmString
                 |isJust z && isJust m = " ZM "
                 |isJust z = " Z "
@@ -79,30 +78,36 @@ instance Show a => ToWKT (Point a) where
 instance Show a => ToWKT (LineString a) where
     toWKT lineString
         | null line = "EMPTY"
-        | otherwise = "LineString " <> zString <> mString <> " (" <> show lineString <> ")"
+        | otherwise = "LineString" <> zmString <> "(" <> show lineString <> ")"
         where
             LineString line = lineString
             first = head line
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (Triangle a) where
-    toWKT triangle = "Triangle " <> zString <> mString <> " (" <> show triangle <> ")"
+    toWKT triangle = "Triangle" <> zmString <> "(" <> show triangle <> ")"
         where
             Triangle vertices = triangle
             first = head vertices
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 
 instance Show a => ToWKT (Polygon a) where
-    toWKT polygon = "Polygon " <> zString <> mString <> " (" <> show polygon <> ")"
+    toWKT polygon = "Polygon" <> zmString <> "(" <> show polygon <> ")"
         where
             Polygon rings = polygon
             (LineString firstLine) = head rings
@@ -110,8 +115,11 @@ instance Show a => ToWKT (Polygon a) where
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (Primitives a) where
     toWKT (PrimPoint a)    = toWKT a
@@ -121,28 +129,35 @@ instance Show a => ToWKT (Primitives a) where
 
 -- Multipart
 instance Show a => ToWKT (MultiPoint a) where
-    toWKT (MultiPoint points) = "MultiPoint " <> zString <> mString <> " (" <> show points <> ")"
+    toWKT (MultiPoint points) = "MultiPoint" <> zmString <> "(" <> show points <> ")"
         where
             first = head points
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (MultiLineString a) where
-    toWKT (MultiLineString lineStrings) = "MultiLineString " <> zString <> mString <> " (" <> show lineStrings <> ")"
+    toWKT (MultiLineString lineStrings) = "MultiLineString" <> zmString <> "(" <> show lineStrings <> ")"
         where
             (LineString firstLine) = head lineStrings
             first = head firstLine
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
+
 
 instance Show a => ToWKT (MultiPolygon a) where
-    toWKT (MultiPolygon polygons) = "MultiPolygon " <> zString <> mString <> " (" <> show polygons <> ")"
+    toWKT (MultiPolygon polygons) = "MultiPolygon" <> zmString <> "(" <> show polygons <> ")"
         where
             (Polygon firstPolygon) = head polygons
             (LineString firstLine) = head firstPolygon
@@ -150,33 +165,42 @@ instance Show a => ToWKT (MultiPolygon a) where
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (PolyhedralSurface a) where
-    toWKT (PolyhedralSurface surface) = "PolyhedralSurface " <> zString <> mString <> " (" <> show surface <> ")"
+    toWKT (PolyhedralSurface surface) = "PolyhedralSurface" <> zmString <> "(" <> show surface <> ")"
         where
             (Triangle firstTriangle) = head surface
             first = head firstTriangle
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (TIN a) where
-    toWKT (TIN triangles) = "TIN " <> zString <> mString <> " (" <> show triangles <> ")"
+    toWKT (TIN triangles) = "TIN" <> zmString <> "(" <> show triangles <> ")"
         where
             (Triangle firstTriangle) = head triangles
             first = head firstTriangle
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
 
 instance Show a => ToWKT (GeometryCollection a) where
-    toWKT (GeometryCollection collection) = "GeometryCollection " <> zString <> mString <> " (" <> show collection <> ")"
+    toWKT (GeometryCollection collection) = "GeometryCollection" <> zmString <> "(" <> show collection <> ")"
         where
             first = case head collection of
                 PrimPoint a                 -> a
@@ -186,5 +210,8 @@ instance Show a => ToWKT (GeometryCollection a) where
             z' = z first
             m' = m first
 
-            zString = if isJust z' then "Z" else ""
-            mString = if isJust m' then "M" else ""
+            zmString
+                |isJust z' && isJust m' = " ZM "
+                |isJust z' = " Z "
+                |isJust m' = " M "
+                |otherwise = " "
