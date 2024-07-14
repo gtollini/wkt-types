@@ -1,6 +1,14 @@
 module Test.Data.Wkt.TestElements (module Test.Data.Wkt.TestElements) where
 
-import Data.Wkt.Types
+import Data.Wkt.Point
+import Data.Wkt.LineString
+import Data.Wkt.Polygon
+import Data.Wkt.MultiPoint
+import Data.Wkt.MultiLineString
+import Data.Wkt.MultiPolygon
+import Data.Wkt.GeometryCollection
+import Data.Wkt.Primitives
+
 
 -- Primitives
 -- Points

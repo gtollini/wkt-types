@@ -25,9 +25,19 @@ source-repository head
 
 library
   exposed-modules:
-      Data.Wkt.Showables
-      Data.Wkt.Types
-      Data.Wkt.Validators
+      Data.Wkt.Classes
+      Data.Wkt.GeometryCollection
+      Data.Wkt.Helpers
+      Data.Wkt.LineString
+      Data.Wkt.MultiLineString
+      Data.Wkt.MultiPoint
+      Data.Wkt.MultiPolygon
+      Data.Wkt.Point
+      Data.Wkt.Polygon
+      Data.Wkt.PolyhedralSurface
+      Data.Wkt.Primitives
+      Data.Wkt.TIN
+      Data.Wkt.Triangle
   other-modules:
       Paths_wkt_types
   autogen-modules:

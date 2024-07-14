@@ -2,10 +2,9 @@ module Test.Data.Wkt.ToWKT (module Test.Data.Wkt.ToWKT) where
     
 import Test.Hspec
 -- import Test.QuickCheck
-import Data.Wkt.Types
-import Data.Wkt.Showables
 import Test.Data.Wkt.TestElements
 
+import Data.Wkt.Classes
 -- Primitives
 points :: Spec
 points = do
