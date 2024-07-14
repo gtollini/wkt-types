@@ -1,5 +1,5 @@
-module Data.Wtk.Validators (module Data.Wtk.Validators) where
-import Data.Wtk.Types
+module Data.Wkt.Validators (module Data.Wkt.Validators) where
+import Data.Wkt.Types
 import Data.List (sort, group)
 import Data.Maybe (isJust)
 

@@ -1,5 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances #-}
-module Data.Wtk.Types (module Data.Wtk.Types) where
+module Data.Wkt.Types (module Data.Wkt.Types) where
 
 -- Primitives
 data Point = Point{

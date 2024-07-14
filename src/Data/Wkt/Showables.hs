@@ -1,9 +1,9 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# OPTIONS_GHC -Wno-orphans #-}
 
-module Data.Wtk.Showables (module Data.Wtk.Showables) where
+module Data.Wkt.Showables (module Data.Wkt.Showables) where
 
-import Data.Wtk.Types
+import Data.Wkt.Types
 import Data.Maybe (isJust)
 import Data.List (intercalate)
 
