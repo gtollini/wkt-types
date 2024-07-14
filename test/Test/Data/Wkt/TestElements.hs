@@ -29,6 +29,19 @@ lineStringM = LineString [pointM, pointM]
 lineStringZM :: LineString Int
 lineStringZM = LineString [pointZM, pointZM]
 
+-- Triangles (TODO)
+-- triangle :: Triangle Int
+-- triangle = Triangle [point, point, point, point]
+
+-- triangleZ :: Triangle Int
+-- triangleZ = Triangle [pointZ, pointZ, pointZ, pointZ]
+
+-- triangleM :: Triangle Int
+-- triangleM = Triangle [pointM, pointM, pointM, pointM]
+
+-- triangleZM :: Triangle Int
+-- triangleZM = Triangle [pointZM, pointZM, pointZM, pointZM]
+
 -- Polygons
 polygon :: Polygon Int
 polygon = Polygon [lineString]
@@ -84,3 +97,14 @@ multiPolygonM = MultiPolygon [polygonM, polygonM]
 
 multiPolygonZM :: MultiPolygon Int
 multiPolygonZM = MultiPolygon [polygonZM, polygonZM]
+
+-- PolyhedralSurface (TODO)
+
+-- TIN (TODO)
+
+-- GeometryCollection
+geometryCollectionHomo :: GeometryCollection Int
+geometryCollectionHomo = GeometryCollection [PrimPoint point, PrimPoint point]
+
+geometryCollectionHetero :: GeometryCollection Int
+geometryCollectionHetero = GeometryCollection [PrimPoint point, PrimLine lineString]

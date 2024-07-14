@@ -83,24 +83,10 @@ multiPolygons = do
         it "should convert a 4D MultiPolygon to WKT" $ do
             toWKT multiPolygonZM `shouldBe` "MultiPolygon ZM (((1 2 3 4, 1 2 3 4)), ((1 2 3 4, 1 2 3 4)))"
 
--- multiPolygon :: Spec
--- multiPolygon = do
---     describe "ToWKT multiPolygon" $ do
---         it "should convert a 2D MultiPolygon to WKT" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=1, y=2, z=Nothing, m=Nothing}], LineString [Point {x=2, y=3, z=Nothing, m=Nothing}, Point {x=4, y=5, z=Nothing, m=Nothing}, Point {x=6, y=7, z=Nothing, m=Nothing}, Point {x=2, y=3, z=Nothing, m=Nothing}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon (((1 2, 3 4, 5 6, 1 2), (2 3, 4 5, 6 7, 2 3)))"
---         it "should convert a 3D (Z) MultiPolygon to WKT" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Just 3, m=Nothing}, Point {x=3, y=4, z=Just 5, m=Nothing}, Point {x=5, y=6, z=Just 7, m=Nothing}, Point {x=1, y=2, z=Just 3, m=Nothing}], LineString [Point {x=2, y=3, z=Just 4, m=Nothing}, Point {x=4, y=5, z=Just 6, m=Nothing}, Point {x=6, y=7, z=Just 8, m=Nothing}, Point {x=2, y=3, z=Just 4, m=Nothing}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon Z (((1 2 3, 3 4 5, 5 6 7, 1 2 3), (2 3 4, 4 5 6, 6 7 8, 2 3 4)))"
---         it "should convert a 3D (M) MultiPolygon to WKT" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Nothing, m=Just 4}, Point {x=3, y=4, z=Nothing, m=Just 5}, Point {x=5, y=6, z=Nothing, m=Just 6}, Point {x=1, y=2, z=Nothing, m=Just 4}], LineString [Point {x=2, y=3, z=Nothing, m=Just 5}, Point {x=4, y=5, z=Nothing, m=Just 6}, Point {x=6, y=7, z=Nothing, m=Just 7}, Point {x=2, y=3, z=Nothing, m=Just 5}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon M (((1 2 4, 3 4 5, 5 6 6, 1 2 4), (2 3 5, 4 5 6, 6 7 7, 2 3 5)))"
---         it "should convert a 4D MultiPolygon to WKT" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Just 3, m=Just 4}, Point {x=3, y=4, z=Just 5, m=Just 6}, Point {x=5, y=6, z=Just 7, m=Just 8}, Point {x=1, y=2, z=Just 3, m=Just 4}], LineString [Point {x=2, y=3, z=Just 4, m=Just 5}, Point {x=4, y=5, z=Just 6, m=Just 7}, Point {x=6, y=7, z=Just 8, m=Just 9}, Point {x=2, y=3, z=Just 4, m=Just 5}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon ZM (((1 2 3 4, 3 4 5 6, 5 6 7 8, 1 2 3 4), (2 3 4 5, 4 5 6 7, 6 7 8 9, 2 3 4 5)))"
---         it "should convert a 2D MultiPolygon with a hole to WKT" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=1, y=2, z=Nothing, m=Nothing}], LineString [Point {x=2, y=3, z=Nothing, m=Nothing}, Point {x=4, y=5, z=Nothing, m=Nothing}, Point {x=6, y=7, z=Nothing, m=Nothing}, Point {x=2, y=3, z=Nothing, m=Nothing}], LineString [Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=7, y=8, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon (((1 2, 3 4, 5 6, 1 2), (2 3, 4 5, 6 7, 2 3), (3 4, 5 6, 7 8, 3 4)))"
---         it "should convert a MultiPolygon with multiple polygons" $ do
---             toWKT (MultiPolygon [Polygon [LineString [Point {x=1, y=2, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=1, y=2, z=Nothing, m=Nothing}], LineString [Point {x=2, y=3, z=Nothing, m=Nothing}, Point {x=4, y=5, z=Nothing, m=Nothing}, Point {x=6, y=7, z=Nothing, m=Nothing}, Point {x=2, y=3, z=Nothing, m=Nothing}], LineString [Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=7, y=8, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}]], Polygon [LineString [Point {x=1, y=2, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=1, y=2, z=Nothing, m=Nothing}], LineString [Point {x=2, y=3, z=Nothing, m=Nothing}, Point {x=4, y=5, z=Nothing, m=Nothing}, Point {x=6, y=7, z=Nothing, m=Nothing}, Point {x=2, y=3, z=Nothing, m=Nothing}], LineString [Point {x=3, y=4, z=Nothing, m=Nothing}, Point {x=5, y=6, z=Nothing, m=Nothing}, Point {x=7, y=8, z=Nothing, m=Nothing}, Point {x=3, y=4, z=Nothing, m=Nothing}]]] :: MultiPolygon Int) 
---                 `shouldBe` "MultiPolygon (((1 2, 3 4, 5 6, 1 2), 
+geometryCollections :: Spec
+geometryCollections = do
+    describe "ToWKT GeometryCollections" $ do
+        it "should convert a homogenous GeometryCollection to WKT" $ do
+            toWKT geometryCollectionHomo   `shouldBe` "GeometryCollection (Point (1 2), Point (1 2))"
+        it "should convert a heterogenous GeometryCollection to WKT" $ do
+            toWKT geometryCollectionHetero `shouldBe` "GeometryCollection (Point (1 2), LineString (1 2, 1 2))"

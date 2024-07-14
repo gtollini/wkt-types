@@ -25,7 +25,6 @@ newtype MultiLineString a = MultiLineString [LineString a]
 
 newtype MultiPolygon a = MultiPolygon [Polygon a]
 
-
 newtype PolyhedralSurface a = PolyhedralSurface [Triangle a]
 
 newtype TIN a = TIN [Triangle a]

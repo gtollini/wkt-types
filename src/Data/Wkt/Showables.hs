@@ -204,7 +204,7 @@ instance Show a => ToWKT (TIN a) where
                 |otherwise = " "
 
 instance Show a => ToWKT (GeometryCollection a) where
-    toWKT (GeometryCollection collection) = "GeometryCollection" <> zmString <> "(" <> show collection <> ")"
+    toWKT (GeometryCollection collection) = "GeometryCollection" <> zmString <> "( " <> intercalate ", " (toWKT <$> collection) <> ")"
         where
             first = case head collection of
                 PrimPoint a                 -> a
@@ -219,6 +219,7 @@ instance Show a => ToWKT (GeometryCollection a) where
                 |isJust z' = " Z "
                 |isJust m' = " M "
                 |otherwise = " "
+
 
 -- Helpers
 showP :: Show a => a -> String
