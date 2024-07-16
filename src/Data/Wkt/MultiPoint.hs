@@ -1,9 +1,11 @@
+{-# LANGUAGE OverloadedStrings#-}
 module Data.Wkt.MultiPoint (module Data.Wkt.MultiPoint) where
 
 import Data.Wkt.Classes
 import Data.Wkt.Point
 import Data.Wkt.Helpers (generateZMString, showP)
 import Data.List (intercalate)
+import Data.Text (pack)
 
 newtype MultiPoint a = MultiPoint [Point a]
 
@@ -11,7 +13,7 @@ instance Show a => Show (MultiPoint a) where
     show (MultiPoint points) = intercalate ", " (showP <$> points)
 
 instance Show a => ToWKT (MultiPoint a) where
-    toWKT multiPoint = "MultiPoint" <> zmString <> "(" <> show multiPoint <> ")"
+    toWKT multiPoint = "MultiPoint" <> zmString <> "(" <> pack (show multiPoint) <> ")"
         where
             (MultiPoint points) = multiPoint
             first = head points

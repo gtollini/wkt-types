@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.TIN (module Data.Wkt.TIN) where
 
 import Data.Wkt.Classes
@@ -5,6 +7,7 @@ import Data.Wkt.Triangle
 import Data.List (intercalate, group, sort)
 import Data.Wkt.Point
 import Data.Wkt.Helpers (generateZMString)
+import Data.Text (pack)
 
 newtype TIN a = TIN [Triangle a]
 
@@ -14,7 +17,7 @@ instance Show a => Show (TIN a) where
             triangles' = map (\(Triangle triangle) -> "(" <> intercalate ", " (show <$> triangle) <> ")") triangles
 
 instance Show a => ToWKT (TIN a) where
-    toWKT (TIN triangles) = "TIN" <> zmString <> "(" <> show triangles <> ")"
+    toWKT (TIN triangles) = "TIN" <> zmString <> "(" <> pack (show triangles) <> ")"
         where
             (Triangle firstTriangle) = head triangles
             first = head firstTriangle

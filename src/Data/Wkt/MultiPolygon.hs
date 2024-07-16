@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings#-}
 module Data.Wkt.MultiPolygon (module Data.Wkt.MultiPolygon) where
 
 import Data.Wkt.Classes
@@ -6,6 +7,7 @@ import Data.Wkt.LineString
 import Data.Wkt.Point
 import Data.Wkt.Helpers
 import Data.List (intercalate)
+import Data.Text (pack)
 
 newtype MultiPolygon a = MultiPolygon [Polygon a]
 
@@ -15,7 +17,7 @@ instance Show a => Show (MultiPolygon a) where
             polygons' =showP <$> polygons
 
 instance Show a => ToWKT (MultiPolygon a) where
-    toWKT multiPolygon = "MultiPolygon" <> zmString <> "(" <> show multiPolygon <> ")"
+    toWKT multiPolygon = "MultiPolygon" <> zmString <> "(" <> pack (show multiPolygon) <> ")"
         where
             (MultiPolygon polygons) = multiPolygon
             (Polygon firstPolygon) = head polygons

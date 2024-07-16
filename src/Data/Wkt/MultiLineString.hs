@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.MultiLineString (module Data.Wkt.MultiLineString) where
 
 import Data.Wkt.Classes
@@ -5,6 +7,7 @@ import Data.Wkt.LineString
 import Data.List (intercalate)
 import Data.Wkt.Helpers (showP, generateZMString)
 import Data.Wkt.Point
+import Data.Text (pack)
 
 newtype MultiLineString a = MultiLineString [LineString a]
 
@@ -14,7 +17,7 @@ instance Show a => Show (MultiLineString a) where
             lines' = showP <$> lineStrings
 
 instance Show a => ToWKT (MultiLineString a) where
-    toWKT multiLineString = "MultiLineString" <> zmString <> "(" <> show multiLineString <> ")"
+    toWKT multiLineString = "MultiLineString" <> zmString <> "(" <> pack (show multiLineString) <> ")"
         where
             (MultiLineString lineStrings) = multiLineString
             (LineString firstLine) = head lineStrings

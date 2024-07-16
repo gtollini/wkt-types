@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.GeometryCollection (module Data.Wkt.GeometryCollection) where
 
 import Data.Wkt.Classes
@@ -8,6 +10,7 @@ import Data.Wkt.Polygon
 import Data.Wkt.Point
 import Data.Wkt.Helpers (generateZMString)
 import Data.List (intercalate)
+import qualified Data.Text as T
 
 newtype GeometryCollection a =  GeometryCollection [Primitives a]
 
@@ -15,7 +18,7 @@ instance Show a => Show (GeometryCollection a) where
     show (GeometryCollection collection) = intercalate ", " (show <$> collection)
 
 instance Show a => ToWKT (GeometryCollection a) where
-    toWKT (GeometryCollection collection) = "GeometryCollection" <> zmString <> "( " <> intercalate ", " (toWKT <$> collection) <> ")"
+    toWKT (GeometryCollection collection) = "GeometryCollection" <> zmString <> "( " <> T.intercalate ", " (toWKT <$> collection) <> ")"
         where
             first = case head collection of
                 PrimPoint a                 -> a

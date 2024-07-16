@@ -1,3 +1,4 @@
+{-# LANGUAGE OverloadedStrings#-}
 module Data.Wkt.PolyhedralSurface (module Data.Wkt.PolyhedralSurface) where
 
 import Data.Wkt.Classes
@@ -5,6 +6,8 @@ import Data.Wkt.Triangle
 import Data.List (intercalate, group, sort)
 import Data.Wkt.Point
 import Data.Wkt.Helpers (generateZMString, allSides)
+import Data.Text (pack)
+
 
 newtype PolyhedralSurface a = PolyhedralSurface [Triangle a]
 
@@ -14,7 +17,7 @@ instance Show a => Show (PolyhedralSurface a) where
             surface' = map (\(Triangle triangle) -> "(" <> intercalate ", " (show <$> triangle) <> ")") surface
 
 instance Show a => ToWKT (PolyhedralSurface a) where
-    toWKT (PolyhedralSurface surface) = "PolyhedralSurface" <> zmString <> "(" <> show surface <> ")"
+    toWKT (PolyhedralSurface surface) = "PolyhedralSurface" <> zmString <> "(" <> pack (show surface) <> ")"
         where
             (Triangle firstTriangle) = head surface
             first = head firstTriangle

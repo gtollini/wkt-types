@@ -1,13 +1,10 @@
 module Main where
 
 import Test.Hspec
-import Test.Data.Wkt.ToWKT
+import Test.Data.Wkt.ToWKT (toWktTests)
+import Test.Data.Wkt.FromWKT (fromWktTests)
 
 main :: IO ()
 main = hspec $ do
-    points
-    lineStrings
-    polygons
-    multiPoints
-    multiLineStrings
-    multiPolygons
+    toWktTests
+    fromWktTests

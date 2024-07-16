@@ -1,9 +1,12 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.Helpers (module Data.Wkt.Helpers) where
 import Data.Maybe (isJust)
 import Data.Wkt.Point (Point (..))
 import Data.Wkt.Triangle
+import Data.Text (Text)
 
-generateZMString :: Maybe a -> Maybe a -> String
+generateZMString :: Maybe a -> Maybe a -> Text
 generateZMString z' m'
     |isJust z' && isJust m' = " ZM "
     |isJust z' = " Z "

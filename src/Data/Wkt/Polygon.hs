@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.Polygon (module Data.Wkt.Polygon) where
 
 import Data.Wkt.Classes
@@ -6,6 +8,7 @@ import Data.Wkt.LineString
 
 import Data.List (intercalate)
 import Data.Wkt.Helpers (generateZMString)
+import Data.Text (pack)
 
 newtype Polygon a = Polygon [LineString a]
 
@@ -15,7 +18,7 @@ instance Show a => Show (Polygon a) where
             rings = map (\(LineString ring) -> "(" <> intercalate ", " (show <$> ring) <> ")") polygon
 
 instance Show a => ToWKT (Polygon a) where
-    toWKT polygon = "Polygon" <> zmString <> "(" <> show polygon <> ")"
+    toWKT polygon = "Polygon" <> zmString <> "(" <> pack (show polygon) <> ")"
         where
             Polygon rings = polygon
             (LineString firstLine) = head rings

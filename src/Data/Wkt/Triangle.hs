@@ -1,3 +1,5 @@
+{-# LANGUAGE OverloadedStrings#-}
+
 module Data.Wkt.Triangle (module Data.Wkt.Triangle) where
     
 import Data.Wkt.Classes
@@ -5,6 +7,7 @@ import Data.Wkt.Point
 
 import Data.List (intercalate)
 import Data.Maybe (isJust)
+import Data.Text (pack)
 
 newtype Triangle a  = Triangle [Point a]
 
@@ -12,7 +15,7 @@ instance Show a => Show (Triangle a) where
     show (Triangle vertices) = intercalate ", " (show <$> vertices)
 
 instance Show a => ToWKT (Triangle a) where
-    toWKT triangle = "Triangle" <> zmString <> "(" <> show triangle <> ")"
+    toWKT triangle = "Triangle" <> zmString <> "(" <> pack (show triangle) <> ")"
         where
             Triangle vertices = triangle
             first = head vertices
