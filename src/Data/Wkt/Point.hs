@@ -12,7 +12,7 @@ import Data.Attoparsec.Text
       skipSpace,
       double,
       parseOnly, Parser )
-import Control.Applicative ((<|>))
+import Data.Wkt.Helpers (zmParser)
 
 import Data.Text (pack, Text)
 
@@ -53,10 +53,7 @@ instance ParseableFromWKT Point where
     wktParser = do
         skipSpace
         _ <- asciiCI "POINT"
-        skipSpace
-        zFlag <- "Z" <|> "z" <|> ""
-        mFlag <- "M" <|> "m" <|> ""
-        skipSpace
+        (zFlag, mFlag) <- zmParser
         _ <- "("
         parsePoint zFlag mFlag
 
@@ -82,3 +79,10 @@ parsePoint zFlag mFlag = do
         else
             return Nothing
     return Point{x = x',y = y', z = z', m = m'}
+
+-- Helpers
+pointDimension :: Point a -> Int
+pointDimension (Point _ _ z' m')
+    | isJust m' = 4
+    | isJust z' = 3
+    | otherwise = 2

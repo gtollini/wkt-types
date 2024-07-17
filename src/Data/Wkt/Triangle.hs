@@ -8,6 +8,7 @@ import Data.Wkt.Point
 import Data.List (intercalate)
 import Data.Maybe (isJust)
 import Data.Text (pack)
+import Data.Wkt.Helpers (allPairs)
 
 newtype Triangle a  = Triangle [Point a]
 
@@ -34,3 +35,7 @@ instance Eq a => Valid (Triangle a) where
             firstPoint = head  lines'
             lastPoint = head lines'
             size = length lines'
+
+-- Must be valid Triangle
+allSides :: Triangle a-> [(Point a, Point a)]
+allSides (Triangle vertices) = allPairs vertices

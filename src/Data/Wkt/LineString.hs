@@ -5,9 +5,9 @@
 module Data.Wkt.LineString (module Data.Wkt.LineString) where
 
 import Data.Wkt.Classes
-import Data.Wkt.Point (Point(..), parsePoint)
+import Data.Wkt.Point (Point(..), parsePoint, pointDimension)
 import Data.List (intercalate)
-import Data.Wkt.Helpers (generateZMString, pointDimension)
+import Data.Wkt.Helpers (generateZMString, zmParser)
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text
     ( asciiCI,
@@ -45,10 +45,7 @@ instance ParseableFromWKT LineString where
     wktParser = do
         skipSpace
         _ <- asciiCI "LINESTRING"
-        skipSpace
-        zFlag <- "Z" <|> "z" <|> ""
-        mFlag <- "M" <|> "m" <|> ""
-        skipSpace
+        (zFlag, mFlag) <- zmParser
         _ <- "("
         parseLineString zFlag mFlag
 

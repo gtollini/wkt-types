@@ -5,7 +5,7 @@ import Data.Wkt.Classes
 import Data.Wkt.Triangle
 import Data.List (intercalate, group, sort)
 import Data.Wkt.Point
-import Data.Wkt.Helpers (generateZMString, allSides)
+import Data.Wkt.Helpers (generateZMString)
 import Data.Text (pack)
 
 

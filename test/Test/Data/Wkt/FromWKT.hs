@@ -7,15 +7,14 @@ import Data.Wkt.Classes
 import Test.Data.Wkt.TestElements
 import Data.Wkt.Point (Point(..))
 import Data.Wkt.LineString (LineString(..))
--- import qualified Data.Wkt.Point as P
--- import qualified Data.Wkt.LineString as LS
+import Data.Wkt.Polygon (Polygon(..))
 
 
 fromWktTests :: Spec
 fromWktTests = do
     points
     lineStrings
-    -- polygons
+    polygons
     -- multiPoints
     -- multiLineStrings
     -- multiPolygons
@@ -45,3 +44,14 @@ lineStrings = do
         it "should convert a WKT Text to a 4D LineString" $ do
             floor <$> (fromWKT lineStringZMText :: LineString Double) `shouldBe` lineStringZM
         
+polygons :: Spec
+polygons = do
+    describe "FromWKT Polygons" $ do
+        it "should convert a WKT Text to a 2D Polygon" $ do
+            floor <$> (fromWKT polygonText :: Polygon Double)  `shouldBe` polygon
+        it "should convert a WKT Text to a 3D (Z) Polygon " $ do
+            floor <$> (fromWKT polygonZText :: Polygon Double)  `shouldBe` polygonZ
+        it "should convert a WKT Text to a 3D (M) Polygon" $ do
+            floor <$> (fromWKT polygonMText :: Polygon Double)  `shouldBe` polygonM
+        it "should convert a WKT Text to a 4D Polygon" $ do
+            floor <$> (fromWKT polygonZMText :: Polygon Double) `shouldBe` polygonZM

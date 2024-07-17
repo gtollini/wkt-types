@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE DeriveFunctor #-}
 
 module Data.Wkt.Polygon (module Data.Wkt.Polygon) where
 
@@ -7,10 +8,13 @@ import Data.Wkt.Point
 import Data.Wkt.LineString
 
 import Data.List (intercalate)
-import Data.Wkt.Helpers (generateZMString)
-import Data.Text (pack)
+import Data.Wkt.Helpers (generateZMString, zmParser)
+import Data.Text (pack, Text)
+import Data.Attoparsec.Text (parseOnly, skipSpace, asciiCI, Parser)
+import Control.Applicative ((<|>))
 
 newtype Polygon a = Polygon [LineString a]
+    deriving (Functor, Eq)
 
 instance Show a => Show (Polygon a) where
     show (Polygon polygon) = intercalate ", " rings
@@ -33,3 +37,27 @@ instance Eq a => Valid (Polygon a) where
         where
             validLines = all isValid lines'
             validPolygon = all (\(LineString line) -> head line == last line) lines'
+
+instance FromWKT Polygon where
+    fromWKT = either (error . show) id . parseOnly wktParser
+
+instance ParseableFromWKT Polygon where
+    wktParser = do
+        skipSpace
+        _ <- asciiCI "POLYGON"
+        (zFlag, mFlag) <- zmParser
+        _ <- "("
+        parsePolygon zFlag mFlag
+        
+parsePolygon :: Text -> Text -> Parser (Polygon Double)
+parsePolygon zFlag mFlag = do
+    Polygon <$> ringsParser zFlag mFlag
+            where
+                ringsParser zFlag' mFlag' = do
+                    _ <- "("
+                    newRing <- parseLineString zFlag' mFlag'
+                    closing <- ")" <|> ""
+                    if closing /= "" then
+                        return [newRing]
+                    else do
+                         (newRing :) <$> ("," *> ringsParser zFlag' mFlag')
