@@ -9,6 +9,7 @@ import Data.Wkt.Point (Point(..))
 import Data.Wkt.LineString (LineString(..))
 import Data.Wkt.Polygon (Polygon(..))
 import Data.Wkt.MultiPoint (MultiPoint(..))
+import Data.Wkt.MultiLineString (MultiLineString(..))
 
 
 fromWktTests :: Spec
@@ -17,7 +18,7 @@ fromWktTests = do
     lineStrings
     polygons
     multiPoints
-    -- multiLineStrings
+    multiLineStrings
     -- multiPolygons
     -- geometryCollections
 
@@ -70,3 +71,15 @@ multiPoints = do
             floor <$> (fromWKT multiPointMText :: MultiPoint Double)  `shouldBe` multiPointM
         it "should convert a WKT Text to a 4D MultiPoint" $ do
             floor <$> (fromWKT multiPointZMText :: MultiPoint Double) `shouldBe` multiPointZM
+
+multiLineStrings :: Spec
+multiLineStrings = do
+    describe "FromWKT MultiLineStrings" $ do
+        it "should convert a WKT Text to a 2D MultiLineString" $ do
+            floor <$> (fromWKT multiLineStringText :: MultiLineString Double)  `shouldBe` multiLineString
+        it "should convert a WKT Text to a 3D (Z) MultiLineString " $ do
+            floor <$> (fromWKT multiLineStringZText :: MultiLineString Double)  `shouldBe` multiLineStringZ
+        it "should convert a WKT Text to a 3D (M) MultiLineString" $ do
+            floor <$> (fromWKT multiLineStringMText :: MultiLineString Double)  `shouldBe` multiLineStringM
+        it "should convert a WKT Text to a 4D MultiLineString" $ do
+            floor <$> (fromWKT multiLineStringZText :: MultiLineString Double) `shouldBe` multiLineStringZ

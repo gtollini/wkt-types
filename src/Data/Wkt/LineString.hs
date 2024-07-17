@@ -54,6 +54,7 @@ parseLineString zFlag mFlag = do
     LineString <$> pointsParser zFlag mFlag
             where
                 pointsParser zFlag' mFlag' = do
+                    skipSpace
                     newPoint <- parsePoint zFlag' mFlag'                    
                     closing <- ")" <|> ""
                     if closing /= "" then
