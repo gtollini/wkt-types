@@ -48,13 +48,13 @@ instance ParseableFromWKT MultiLineString where
         parseMultiLineString zFlag mFlag
         
 parseMultiLineString :: Text -> Text -> Parser (MultiLineString Double)
-parseMultiLineString zFlag mFlag = do
-    MultiLineString <$> lineStringParser zFlag mFlag
+parseMultiLineString zFlag mFlag = MultiLineString <$> lineStringParser zFlag mFlag
             where
                 lineStringParser zFlag' mFlag' = do
                     skipSpace
                     _ <- "("
-                    newLineString <- parseLineString zFlag' mFlag'                    
+                    newLineString <- parseLineString zFlag' mFlag'
+                    skipSpace                    
                     closing <- ")" <|> ""
                     if closing /= "" then
                         return [newLineString]

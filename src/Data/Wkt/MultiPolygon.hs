@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE DeriveFunctor#-}
 module Data.Wkt.MultiPolygon (module Data.Wkt.MultiPolygon) where
 
 import Data.Wkt.Classes
@@ -7,9 +8,12 @@ import Data.Wkt.LineString
 import Data.Wkt.Point
 import Data.Wkt.Helpers
 import Data.List (intercalate)
-import Data.Text (pack)
+import Data.Text (pack, Text)
+import Data.Attoparsec.Text (parseOnly, skipSpace, asciiCI, Parser)
+import Control.Applicative ((<|>))
 
 newtype MultiPolygon a = MultiPolygon [Polygon a]
+    deriving (Functor, Eq)
 
 instance Show a => Show (MultiPolygon a) where
     show (MultiPolygon polygons) = intercalate ", " polygons'
@@ -27,6 +31,30 @@ instance Show a => ToWKT (MultiPolygon a) where
             m' = m first
 
             zmString = generateZMString z' m'
-
 instance Eq a => Valid (MultiPolygon a) where
     isValid (MultiPolygon polygons') = all isValid polygons'
+
+instance FromWKT MultiPolygon where
+    fromWKT = either (error . show) id . parseOnly wktParser
+
+instance ParseableFromWKT MultiPolygon where
+    wktParser = do
+        skipSpace
+        _ <- asciiCI "MULTIPOLYGON"
+        (zFlag, mFlag) <- zmParser
+        _ <- "("
+        parseMultiPolygon zFlag mFlag
+
+parseMultiPolygon :: Text -> Text -> Parser (MultiPolygon Double)
+parseMultiPolygon zFlag mFlag = MultiPolygon <$> polygonParser zFlag mFlag
+        where
+            polygonParser zFlag' mFlag' = do
+                skipSpace
+                _ <- "("
+                newPolygon <- parsePolygon zFlag' mFlag'
+                skipSpace
+                closing <- ")" <|> ""
+                if closing /= "" then
+                    return [newPolygon]
+                else do
+                        (newPolygon :) <$> ("," *> polygonParser zFlag' mFlag')

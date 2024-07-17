@@ -40,13 +40,13 @@ instance ParseableFromWKT MultiPoint where
         parseMultiPoint zFlag mFlag
 
 parseMultiPoint :: Text -> Text -> Parser (MultiPoint Double)
-parseMultiPoint zFlag mFlag = do
-    MultiPoint <$> pointsParser zFlag mFlag
+parseMultiPoint zFlag mFlag = MultiPoint <$> pointsParser zFlag mFlag
             where
                 pointsParser zFlag' mFlag' = do
                     skipSpace
                     _ <- "("
-                    newPoint <- parsePoint zFlag' mFlag'                    
+                    newPoint <- parsePoint zFlag' mFlag'
+                    skipSpace                    
                     closing <- "))" <|> ""
                     if closing /= "" then
                         return [newPoint]

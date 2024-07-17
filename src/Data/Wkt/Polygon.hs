@@ -50,15 +50,15 @@ instance ParseableFromWKT Polygon where
         parsePolygon zFlag mFlag
         
 parsePolygon :: Text -> Text -> Parser (Polygon Double)
-parsePolygon zFlag mFlag = do
-    Polygon <$> ringsParser zFlag mFlag
-            where
-                ringsParser zFlag' mFlag' = do
-                    skipSpace
-                    _ <- "("
-                    newRing <- parseLineString zFlag' mFlag'
-                    closing <- ")" <|> ""
-                    if closing /= "" then
-                        return [newRing]
-                    else do
-                         (newRing :) <$> ("," *> ringsParser zFlag' mFlag')
+parsePolygon zFlag mFlag = Polygon <$> ringsParser zFlag mFlag
+    where
+        ringsParser zFlag' mFlag' = do
+            skipSpace
+            _ <- "("
+            newRing <- parseLineString zFlag' mFlag'
+            skipSpace
+            closing <- ")" <|> ""
+            if closing /= "" then
+                return [newRing]
+            else do
+                    (newRing :) <$> ("," *> ringsParser zFlag' mFlag')

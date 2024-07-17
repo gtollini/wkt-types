@@ -50,14 +50,14 @@ instance ParseableFromWKT LineString where
         parseLineString zFlag mFlag
 
 parseLineString :: Text -> Text -> Parser (LineString Double)
-parseLineString zFlag mFlag = do
-    LineString <$> pointsParser zFlag mFlag
-            where
-                pointsParser zFlag' mFlag' = do
-                    skipSpace
-                    newPoint <- parsePoint zFlag' mFlag'                    
-                    closing <- ")" <|> ""
-                    if closing /= "" then
-                        return [newPoint]
-                    else
-                        (newPoint :) <$> ("," *> pointsParser zFlag' mFlag')
+parseLineString zFlag mFlag = LineString <$> pointsParser zFlag mFlag
+    where
+        pointsParser zFlag' mFlag' = do
+            skipSpace
+            newPoint <- parsePoint zFlag' mFlag'        
+            skipSpace            
+            closing <- ")" <|> ""
+            if closing /= "" then
+                return [newPoint]
+            else
+                (newPoint :) <$> ("," *> pointsParser zFlag' mFlag')
