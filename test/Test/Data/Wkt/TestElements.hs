@@ -91,7 +91,6 @@ polygonZM = Polygon [lineStringZM]
 polygonZMText :: Text
 polygonZMText = "Polygon ZM ((1 2 3 4, 1 2 3 4))"
 
-
 polygonR :: Polygon Int
 polygonR = Polygon [lineString, lineString]
 polygonRText :: Text

@@ -54,6 +54,7 @@ parsePolygon zFlag mFlag = do
     Polygon <$> ringsParser zFlag mFlag
             where
                 ringsParser zFlag' mFlag' = do
+                    skipSpace
                     _ <- "("
                     newRing <- parseLineString zFlag' mFlag'
                     closing <- ")" <|> ""
