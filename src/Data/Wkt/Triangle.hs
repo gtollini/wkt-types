@@ -1,4 +1,5 @@
 {-# LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE DeriveFunctor #-}
 
 module Data.Wkt.Triangle (module Data.Wkt.Triangle) where
     
@@ -11,6 +12,7 @@ import Data.Text (pack)
 import Data.Wkt.Helpers (allPairs)
 
 newtype Triangle a  = Triangle [Point a]
+    deriving (Functor, Eq)
 
 instance Show a => Show (Triangle a) where
     show (Triangle vertices) = intercalate ", " (show <$> vertices)
