@@ -60,7 +60,6 @@ instance ParseableFromWKT Point where
         _ <- "("
         parsePoint zFlag mFlag
 
-
 parsePoint :: Text -> Text -> Parser (Point Double)
 parsePoint zFlag mFlag = do
     skipSpace

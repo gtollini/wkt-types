@@ -8,11 +8,11 @@ import Data.Wkt.Classes
 import Data.Wkt.Point (Point(..), parsePoint)
 import Data.List (intercalate)
 import Data.Wkt.Helpers (generateZMString, pointDimension)
-import Data.Text (pack)
+import Data.Text (pack, Text)
 import Data.Attoparsec.Text
     ( asciiCI,
       skipSpace,
-      parseOnly )
+      parseOnly, Parser )
 import Control.Applicative ((<|>))
 
 newtype LineString a = LineString [Point a]
@@ -50,12 +50,16 @@ instance ParseableFromWKT LineString where
         mFlag <- "M" <|> "m" <|> ""
         skipSpace
         _ <- "("
-        LineString <$> pointsParser zFlag mFlag
+        parseLineString zFlag mFlag
+
+parseLineString :: Text -> Text -> Parser (LineString Double)
+parseLineString zFlag mFlag = do
+    LineString <$> pointsParser zFlag mFlag
             where
-                pointsParser zFlag mFlag= do
-                    newPoint <- parsePoint zFlag mFlag                    
+                pointsParser zFlag' mFlag' = do
+                    newPoint <- parsePoint zFlag' mFlag'                    
                     closing <- ")" <|> ""
                     if closing /= "" then
                         return [newPoint]
                     else
-                        (newPoint :) <$> ("," *> pointsParser zFlag mFlag)
+                        (newPoint :) <$> ("," *> pointsParser zFlag' mFlag')
