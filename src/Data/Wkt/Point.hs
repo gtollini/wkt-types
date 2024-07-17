@@ -9,14 +9,12 @@ import Data.Wkt.Classes
 import Data.Maybe (isJust)
 import Data.Attoparsec.Text
     ( asciiCI,
-      Result,
       skipSpace,
       double,
-      parseOnly,
-      parse )
+      parseOnly, Parser )
 import Control.Applicative ((<|>))
 
-import Data.Text (pack)
+import Data.Text (pack, Text)
 
 data Point a = Point{
     x :: a,
@@ -49,13 +47,9 @@ instance Show a => ToWKT (Point a) where
 instance Valid (Point a) where
     isValid (Point {}) = True
 
-instance FromWKT (Point Double) where
+instance FromWKT Point where
     fromWKT = either (error . show) id . parseOnly wktParser
-
-testParse :: Result (Point Double)
-testParse = parse wktParser "POINT Z (1 2 3)"
-
-instance ParseableFromWKT (Point Double) where
+instance ParseableFromWKT Point where
     wktParser = do
         skipSpace
         _ <- asciiCI "POINT"
@@ -64,29 +58,28 @@ instance ParseableFromWKT (Point Double) where
         mFlag <- "M" <|> "m" <|> ""
         skipSpace
         _ <- "("
-        skipSpace
-        x' <- double
-        skipSpace
-        y' <- double
-        skipSpace
-        z' <-
-            if zFlag /= "" then do
-                z' <- double
-                skipSpace
-                return $ Just z'
-            else
-                return Nothing
-        m' <-
-            if mFlag /= "" then do
-                m' <- double
-                skipSpace
-                return $ Just m'
-            else
-                return Nothing
+        parsePoint zFlag mFlag
 
-        return Point{
-            x = x',
-            y = y',
-            z = z',
-            m = m'
-        }
+
+parsePoint :: Text -> Text -> Parser (Point Double)
+parsePoint zFlag mFlag = do
+    skipSpace
+    x' <- double
+    skipSpace
+    y' <- double
+    skipSpace
+    z' <-
+        if zFlag /= "" then do
+            z' <- double
+            skipSpace
+            return $ Just z'
+        else
+            return Nothing
+    m' <-
+        if mFlag /= "" then do
+            m' <- double
+            skipSpace
+            return $ Just m'
+        else
+            return Nothing
+    return Point{x = x',y = y', z = z', m = m'}

@@ -10,8 +10,8 @@ class ToWKT a where
     toWKT :: a -> Text
 
 class ParseableFromWKT a => FromWKT a where
-    fromWKT :: Text -> a
+    fromWKT :: Text -> a Double
     fromWKT = either (error . show) id . parseOnly wktParser
 class ParseableFromWKT a where
-    wktParser :: Parser a
+    wktParser :: Parser (a Double)
 

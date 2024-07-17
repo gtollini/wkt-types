@@ -1,15 +1,22 @@
 {-# LANGUAGE OverloadedStrings#-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE DeriveFunctor #-}
 
 module Data.Wkt.LineString (module Data.Wkt.LineString) where
 
 import Data.Wkt.Classes
-import Data.Wkt.Point (Point(..))
+import Data.Wkt.Point (Point(..), parsePoint)
 import Data.List (intercalate)
 import Data.Wkt.Helpers (generateZMString, pointDimension)
 import Data.Text (pack)
+import Data.Attoparsec.Text
+    ( asciiCI,
+      skipSpace,
+      parseOnly )
+import Control.Applicative ((<|>))
 
 newtype LineString a = LineString [Point a]
-
+    deriving (Eq, Functor)
 instance Show a => Show (LineString a) where
     show (LineString line) = intercalate ", " (show <$> line)
 
@@ -31,3 +38,24 @@ instance Valid (LineString a) where
         where
             fpointDimension = pointDimension fpoint
             tpointDimensions = pointDimension <$> tpoints
+
+instance FromWKT LineString where
+    fromWKT = either (error . show) id . parseOnly wktParser
+instance ParseableFromWKT LineString where
+    wktParser = do
+        skipSpace
+        _ <- asciiCI "LINESTRING"
+        skipSpace
+        zFlag <- "Z" <|> "z" <|> ""
+        mFlag <- "M" <|> "m" <|> ""
+        skipSpace
+        _ <- "("
+        LineString <$> pointsParser zFlag mFlag
+            where
+                pointsParser zFlag mFlag= do
+                    newPoint <- parsePoint zFlag mFlag                    
+                    closing <- ")" <|> ""
+                    if closing /= "" then
+                        return [newPoint]
+                    else
+                        (newPoint :) <$> ("," *> pointsParser zFlag mFlag)
