@@ -4,15 +4,15 @@
 {-# LANGUAGE DeriveFunctor #-}
 
 
-module Data.Wkt.Point (module Data.Wkt.Point) where
-import Data.Wkt.Classes
+module Data.WKT.Point (module Data.WKT.Point) where
+import Data.WKT.Classes
 import Data.Maybe (isJust)
 import Data.Attoparsec.Text
     ( asciiCI,
       skipSpace,
       double,
       parseOnly, Parser )
-import Data.Wkt.Helpers (zmParser)
+import Data.WKT.Helpers (zmParser)
 
 import Data.Text (pack, Text)
 

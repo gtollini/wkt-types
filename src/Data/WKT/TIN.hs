@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings#-}
 
-module Data.Wkt.TIN (module Data.Wkt.TIN) where
+module Data.WKT.TIN (module Data.WKT.TIN) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Triangle
+import Data.WKT.Classes
+import Data.WKT.Triangle
 import Data.List (intercalate, group, sort)
-import Data.Wkt.Point
-import Data.Wkt.Helpers (generateZMString)
+import Data.WKT.Point
+import Data.WKT.Helpers (generateZMString)
 import Data.Text (pack)
 
 newtype TIN a = TIN [Triangle a]

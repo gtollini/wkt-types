@@ -1,10 +1,10 @@
 {-# LANGUAGE OverloadedStrings#-}
 {-# LANGUAGE DeriveFunctor #-}
-module Data.Wkt.MultiPoint (module Data.Wkt.MultiPoint) where
+module Data.WKT.MultiPoint (module Data.WKT.MultiPoint) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Point
-import Data.Wkt.Helpers (generateZMString, showP, zmParser)
+import Data.WKT.Classes
+import Data.WKT.Point
+import Data.WKT.Helpers (generateZMString, showP, zmParser)
 import Data.List (intercalate)
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text (Parser, asciiCI, skipSpace, parseOnly)

@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings#-}
 {-# LANGUAGE DeriveFunctor#-}
-module Data.Wkt.MultiPolygon (module Data.Wkt.MultiPolygon) where
+module Data.WKT.MultiPolygon (module Data.WKT.MultiPolygon) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Polygon
-import Data.Wkt.LineString
-import Data.Wkt.Point
-import Data.Wkt.Helpers
+import Data.WKT.Classes
+import Data.WKT.Polygon
+import Data.WKT.LineString
+import Data.WKT.Point
+import Data.WKT.Helpers
 import Data.List (intercalate)
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text (parseOnly, skipSpace, asciiCI, Parser)

@@ -25,19 +25,21 @@ source-repository head
 
 library
   exposed-modules:
-      Data.Wkt.Classes
-      Data.Wkt.GeometryCollection
-      Data.Wkt.Helpers
-      Data.Wkt.LineString
-      Data.Wkt.MultiLineString
-      Data.Wkt.MultiPoint
-      Data.Wkt.MultiPolygon
-      Data.Wkt.Point
-      Data.Wkt.Polygon
-      Data.Wkt.PolyhedralSurface
-      Data.Wkt.Primitives
-      Data.Wkt.TIN
-      Data.Wkt.Triangle
+      Data.WKT.Classes
+      Data.WKT.Geometries
+      Data.WKT.GeometryCollection
+      Data.WKT.Helpers
+      Data.WKT.IO
+      Data.WKT.LineString
+      Data.WKT.MultiLineString
+      Data.WKT.MultiPoint
+      Data.WKT.MultiPolygon
+      Data.WKT.Point
+      Data.WKT.Polygon
+      Data.WKT.PolyhedralSurface
+      Data.WKT.Primitives
+      Data.WKT.TIN
+      Data.WKT.Triangle
   other-modules:
       Paths_wkt_types
   autogen-modules:
@@ -53,31 +55,13 @@ library
     , text
   default-language: Haskell2010
 
-executable wkt-types-exe
-  main-is: Main.hs
-  other-modules:
-      Paths_wkt_types
-  autogen-modules:
-      Paths_wkt_types
-  hs-source-dirs:
-      app
-  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
-  build-depends:
-      attoparsec
-    , base >=4.7 && <5
-    , bytestring
-    , hspec
-    , text
-    , wkt-types
-  default-language: Haskell2010
-
 test-suite wkt-types-test
   type: exitcode-stdio-1.0
   main-is: Spec.hs
   other-modules:
-      Test.Data.Wkt.FromWKT
-      Test.Data.Wkt.TestElements
-      Test.Data.Wkt.ToWKT
+      Test.Data.WKT.FromWKT
+      Test.Data.WKT.TestElements
+      Test.Data.WKT.ToWKT
       Paths_wkt_types
   autogen-modules:
       Paths_wkt_types

@@ -1,12 +1,12 @@
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.Primitives (module Data.Wkt.Primitives) where
+module Data.WKT.Primitives (module Data.WKT.Primitives) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Point
-import Data.Wkt.LineString
-import Data.Wkt.Polygon
-import Data.Wkt.Triangle
+import Data.WKT.Classes
+import Data.WKT.Point
+import Data.WKT.LineString
+import Data.WKT.Polygon
+import Data.WKT.Triangle
 import Data.Attoparsec.Text (parseOnly, skipSpace, Parser)
 import Control.Applicative ((<|>))
 

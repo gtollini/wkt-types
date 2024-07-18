@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings#-}
-module Data.Wkt.PolyhedralSurface (module Data.Wkt.PolyhedralSurface) where
+module Data.WKT.PolyhedralSurface (module Data.WKT.PolyhedralSurface) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Triangle
+import Data.WKT.Classes
+import Data.WKT.Triangle
 import Data.List (intercalate, group, sort)
-import Data.Wkt.Point
-import Data.Wkt.Helpers (generateZMString)
+import Data.WKT.Point
+import Data.WKT.Helpers (generateZMString)
 import Data.Text (pack)
 
 

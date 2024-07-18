@@ -1,8 +1,8 @@
 module Main where
 
 import Test.Hspec
-import Test.Data.Wkt.ToWKT (toWktTests)
-import Test.Data.Wkt.FromWKT (fromWktTests)
+import Test.Data.WKT.ToWKT (toWktTests)
+import Test.Data.WKT.FromWKT (fromWktTests)
 
 main :: IO ()
 main = hspec $ do

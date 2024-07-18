@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings#-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.GeometryCollection (module Data.Wkt.GeometryCollection) where
+module Data.WKT.GeometryCollection (module Data.WKT.GeometryCollection) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Primitives
-import Data.Wkt.LineString
-import Data.Wkt.Triangle
-import Data.Wkt.Polygon
-import Data.Wkt.Point
-import Data.Wkt.Helpers (generateZMString)
+import Data.WKT.Classes
+import Data.WKT.Primitives
+import Data.WKT.LineString
+import Data.WKT.Triangle
+import Data.WKT.Polygon
+import Data.WKT.Point
+import Data.WKT.Helpers (generateZMString)
 import Data.List (intercalate)
 import qualified Data.Text as T
 import Data.Attoparsec.Text (parseOnly, Parser, skipSpace)

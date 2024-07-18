@@ -2,12 +2,12 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.LineString (module Data.Wkt.LineString) where
+module Data.WKT.LineString (module Data.WKT.LineString) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Point (Point(..), parsePoint, pointDimension)
+import Data.WKT.Classes
+import Data.WKT.Point (Point(..), parsePoint, pointDimension)
 import Data.List (intercalate)
-import Data.Wkt.Helpers (generateZMString, zmParser)
+import Data.WKT.Helpers (generateZMString, zmParser)
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text
     ( asciiCI,

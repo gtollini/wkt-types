@@ -2,13 +2,13 @@
 {-# LANGUAGE GADTs #-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.MultiLineString (module Data.Wkt.MultiLineString) where
+module Data.WKT.MultiLineString (module Data.WKT.MultiLineString) where
 
-import Data.Wkt.Classes
-import Data.Wkt.LineString
+import Data.WKT.Classes
+import Data.WKT.LineString
 import Data.List (intercalate)
-import Data.Wkt.Helpers (showP, generateZMString, zmParser)
-import Data.Wkt.Point
+import Data.WKT.Helpers (showP, generateZMString, zmParser)
+import Data.WKT.Point
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text (Parser, skipSpace, asciiCI, parseOnly)
 import Control.Applicative ((<|>))

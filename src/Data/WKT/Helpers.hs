@@ -1,6 +1,6 @@
 {-# LANGUAGE OverloadedStrings#-}
 
-module Data.Wkt.Helpers (module Data.Wkt.Helpers) where
+module Data.WKT.Helpers (module Data.WKT.Helpers) where
 import Data.Maybe (isJust)
 import Data.Text (Text)
 import Data.Attoparsec.Text (Parser, skipSpace)

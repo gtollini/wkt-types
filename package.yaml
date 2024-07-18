@@ -40,17 +40,6 @@ ghc-options:
 library:
   source-dirs: src
 
-executables:
-  wkt-types-exe:
-    main:                Main.hs
-    source-dirs:         app
-    ghc-options:
-    - -threaded
-    - -rtsopts
-    - -with-rtsopts=-N
-    dependencies:
-    - wkt-types
-
 tests:
   wkt-types-test:
     main:                Spec.hs

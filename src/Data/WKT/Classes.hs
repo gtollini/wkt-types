@@ -1,4 +1,4 @@
-module Data.Wkt.Classes (module Data.Wkt.Classes) where
+module Data.WKT.Classes (module Data.WKT.Classes) where
 import Data.Attoparsec.Text (Parser, parseOnly)
 import Data.Text (Text)
 

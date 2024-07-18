@@ -1,14 +1,14 @@
 {-# LANGUAGE OverloadedStrings#-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.Polygon (module Data.Wkt.Polygon) where
+module Data.WKT.Polygon (module Data.WKT.Polygon) where
 
-import Data.Wkt.Classes
-import Data.Wkt.Point
-import Data.Wkt.LineString
+import Data.WKT.Classes
+import Data.WKT.Point
+import Data.WKT.LineString
 
 import Data.List (intercalate)
-import Data.Wkt.Helpers (generateZMString, zmParser)
+import Data.WKT.Helpers (generateZMString, zmParser)
 import Data.Text (pack, Text)
 import Data.Attoparsec.Text (parseOnly, skipSpace, asciiCI, Parser)
 import Control.Applicative ((<|>))

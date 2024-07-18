@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings#-}
 
-module Test.Data.Wkt.TestElements (module Test.Data.Wkt.TestElements) where
+module Test.Data.WKT.TestElements (module Test.Data.WKT.TestElements) where
 
-import Data.Wkt.Point
-import Data.Wkt.LineString
-import Data.Wkt.Polygon
-import Data.Wkt.MultiPoint
-import Data.Wkt.MultiLineString
-import Data.Wkt.MultiPolygon
-import Data.Wkt.GeometryCollection
-import Data.Wkt.Primitives
+import Data.WKT.Point
+import Data.WKT.LineString
+import Data.WKT.Polygon
+import Data.WKT.MultiPoint
+import Data.WKT.MultiLineString
+import Data.WKT.MultiPolygon
+import Data.WKT.GeometryCollection
+import Data.WKT.Primitives
 import Data.Text (Text)
 
 

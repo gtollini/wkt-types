@@ -1,12 +1,12 @@
 {-# LANGUAGE OverloadedStrings#-}
 
-module Test.Data.Wkt.ToWKT (module Test.Data.Wkt.ToWKT) where
+module Test.Data.WKT.ToWKT (module Test.Data.WKT.ToWKT) where
     
 import Test.Hspec (Spec, describe, it, shouldBe)
 -- import Test.QuickCheck
-import Test.Data.Wkt.TestElements
+import Test.Data.WKT.TestElements
 
-import Data.Wkt.Classes
+import Data.WKT.Classes
 
 toWktTests :: Spec
 toWktTests = do

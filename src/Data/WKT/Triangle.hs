@@ -1,15 +1,15 @@
 {-# LANGUAGE OverloadedStrings#-}
 {-# LANGUAGE DeriveFunctor #-}
 
-module Data.Wkt.Triangle (module Data.Wkt.Triangle) where
+module Data.WKT.Triangle (module Data.WKT.Triangle) where
     
-import Data.Wkt.Classes
-import Data.Wkt.Point
+import Data.WKT.Classes
+import Data.WKT.Point
 
 import Data.List (intercalate)
 import Data.Maybe (isJust)
 import Data.Text (pack)
-import Data.Wkt.Helpers (allPairs)
+import Data.WKT.Helpers (allPairs)
 
 newtype Triangle a  = Triangle [Point a]
     deriving (Functor, Eq)

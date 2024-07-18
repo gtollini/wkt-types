@@ -1,16 +1,16 @@
-module Test.Data.Wkt.FromWKT (module Test.Data.Wkt.FromWKT) where
+module Test.Data.WKT.FromWKT (module Test.Data.WKT.FromWKT) where
     
 import Test.Hspec
 
-import Data.Wkt.Classes
+import Data.WKT.Classes
 
-import Test.Data.Wkt.TestElements
-import Data.Wkt.Point (Point(..))
-import Data.Wkt.LineString (LineString(..))
-import Data.Wkt.Polygon (Polygon(..))
-import Data.Wkt.MultiPoint (MultiPoint(..))
-import Data.Wkt.MultiLineString (MultiLineString(..))
-import Data.Wkt.MultiPolygon (MultiPolygon(..))
+import Test.Data.WKT.TestElements
+import Data.WKT.Point (Point(..))
+import Data.WKT.LineString (LineString(..))
+import Data.WKT.Polygon (Polygon(..))
+import Data.WKT.MultiPoint (MultiPoint(..))
+import Data.WKT.MultiLineString (MultiLineString(..))
+import Data.WKT.MultiPolygon (MultiPolygon(..))
 
 
 fromWktTests :: Spec
