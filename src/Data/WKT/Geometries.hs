@@ -16,6 +16,7 @@ import Data.Attoparsec.Text (Parser, atEnd, parseOnly, skipSpace)
 import Control.Applicative ((<|>))
 
 
+-- | All WKT geometries.
 data Geometries a = Geometries{
     points              :: [Point a],
     lineStrings         :: [LineString a],
@@ -71,8 +72,6 @@ instance Show a => ToWKT (Geometries a) where
         foldl (<>) "" (map ((<>"\n").toWKT) (multiPolygon geometry)) <>
         -- foldl (<>) "" (map ((<>"\n").toWKT) (tins geometry)) <>
         foldl (<>) "" (map ((<>"\n").toWKT) (geometryCollections geometry))
-
-
 
 instance Eq a => Valid (Geometries a) where
     isValid geometry = 
