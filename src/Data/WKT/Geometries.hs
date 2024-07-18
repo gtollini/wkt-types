@@ -62,15 +62,16 @@ instance Show a => Show (Geometries a) where
 
 instance Show a => ToWKT (Geometries a) where
     toWKT geometry = 
-        foldl1 (<>) (map ((<>"\n").toWKT) (points geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (lineStrings geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (polygons geometry)) <>
-        -- foldl1 (<>) (map ((<>"\n").toWKT) (triangles geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (multiPoints geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (multiLineString geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (multiPolygon geometry)) <>
-        -- foldl1 (<>) (map ((<>"\n").toWKT) (tins geometry)) <>
-        foldl1 (<>) (map ((<>"\n").toWKT) (geometryCollections geometry))
+        foldl (<>) "" (map ((<>"\n").toWKT) (points geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (lineStrings geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (polygons geometry)) <>
+        -- foldl (<>) "" (map ((<>"\n").toWKT) (triangles geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (multiPoints geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (multiLineString geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (multiPolygon geometry)) <>
+        -- foldl (<>) "" (map ((<>"\n").toWKT) (tins geometry)) <>
+        foldl (<>) "" (map ((<>"\n").toWKT) (geometryCollections geometry))
+
 
 
 instance Eq a => Valid (Geometries a) where
