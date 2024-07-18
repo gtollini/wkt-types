@@ -3,7 +3,6 @@
 module Test.Data.WKT.ToWKT (module Test.Data.WKT.ToWKT) where
     
 import Test.Hspec (Spec, describe, it, shouldBe)
--- import Test.QuickCheck
 import Test.Data.WKT.TestElements
 
 import Data.WKT.Classes

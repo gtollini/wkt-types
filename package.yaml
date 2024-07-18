@@ -6,13 +6,13 @@ author:              "Gabriel Tollini"
 maintainer:          "gabrieltollini@hotmail.com"
 copyright:           "2024 Gabriel Tollini"
 
-extra-source-files:
+extra-doc-files:
 - README.md
 - CHANGELOG.md
 
 # Metadata used when publishing your package
-# synopsis:            Short description of your package
-# category:            Web
+synopsis:            A library for working with .wkt files.
+category:            Geometry, GIS, Parser, WKT, OGC, Well-Known-Text
 
 # To avoid duplicated efforts in documentation and dealing with the
 # complications of embedding Haddock markup inside cabal files, it is
@@ -21,10 +21,10 @@ description:         Please see the README on GitHub at <https://github.com/gtol
 
 dependencies:
 - base >= 4.7 && < 5
-- hspec
-- attoparsec
-- bytestring
-- text
+- attoparsec >= 0.14.4 && < 0.15
+- bytestring >= 0.12.1 && < 0.13
+- text >= 2.1.1 && < 2.2
+- hspec >= 2.11.9 && < 2.12
 
 ghc-options:
 - -Wall
